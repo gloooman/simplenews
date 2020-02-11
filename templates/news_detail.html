@@ -1,0 +1,52 @@
+{% extends '_base.html' %}
+
+{% block content %}
+
+    <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <h1>{{ object.article }}</h1>
+    <div class="card border-2 mb-4">
+        <div class="cart-body" style="margin-left: 20px">
+            <h4><b>Автор: </b>{{ object.author }}</h4>
+            <p>{{ object.text | safe }}</p>
+        </div>
+    </div>
+        <div class="card border-2 mb-4">
+            <div class="cart-body">
+            {% if comments %}
+                <h4>Комментарии:</h4>
+                {% for comment in comments %}
+                    <div>
+                    <h6>{{ comment.email }}</h6>
+                    <p>{{ comment.text }}</p>
+                    <em>{{ comment.create }}</em>
+                {% endfor %}
+            <h4>Добвить свой комментарий:</h4>
+            </div>
+
+            {% else %}
+                <p>На данный момент коментариев нет. Станьте первым.</p>
+            {% endif %}
+            </div>
+        </div>
+    <div class="card border-2 mb-4">
+        <form action="{% url 'news_detail' object.id %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {% if field.errors %}
+                        <div class="alert alert-danger">
+                            {{ field.errors }}
+                        </div>
+                    {% endif %}
+                    {{ field.label }}
+                    {{ field }}
+                </div>
+            {% endfor %}
+            <button class="btn btn-success" type="submit">Добавить коментарий</button>
+        </form>
+    </div>
+    </div>
+    </div>
+
+{% endblock %}

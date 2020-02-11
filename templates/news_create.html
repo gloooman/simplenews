@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <form action="{% url 'news_create' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group mt-3">
+                <label>Заголовок</label>
+                <input class="form-control" id="id-article" name="article">
+            </div>
+            <textarea id="id-text" name="text">
+            Введите вашу новость
+        </textarea>
+            <button class="btn btn-success mt-3 mb-3" type="submit">Добавить новость</button>
+        </form>
+    {% else %}
+        <p>Для добавления новости войдите или зарегистрируйесь</p>
+        <a class="btn btn-outline-primary mr-2" href="{% url 'login' %}">Log in</a>
+        <a class="btn btn-outline-primary" href="{% url 'signup' %}">Sign up</a>
+    {% endif %}
+
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+        });
+    </script>
+{% endblock %}

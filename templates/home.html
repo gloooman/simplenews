@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="mt-5">
+    {% for news in object_list %}
+        <div class="media mb-3 border border-secondary rounded">
+            <img src='https://www.nomadfoods.com/wp-content/uploads/2018/08/placeholder-1-e1533569576673-960x960.png'
+                 class="align-self-start mr-3" style="max-width: 10em">
+            <div class="media-body">
+                <h5 class="mt-2">{{ news.article }}</h5>
+                <p>{{ news.text| safe | truncatechars:500  }}</p>
+                <a href="{{ news.get_absolute_url }}" class="btn btn-primary">Детальнее</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
